@@ -1,16 +1,6 @@
-use std::{error::Error, fs::File, io};
+use crate::days::helpers::read_lines;
 
-fn read_lines<P>(file_path: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<std::path::Path>,
-{
-    let file = File::open(file_path)?;
-    Ok(io::BufRead::lines(io::BufReader::new(file)))
-}
-
-fn remove_whitespace(s: &str) -> String {
-    s.chars().filter(|c| !c.is_whitespace()).collect()
-}
+use super::helpers::remove_whitespace;
 
 fn get_choices(line: &str) -> (RPS, RPS) {
     return get_rps(line).unwrap();
@@ -74,8 +64,8 @@ enum RPS {
     Scissors = 3,
 }
 
-fn main() {
-    let Ok(lines) = read_lines("input.txt") else { return };
+pub fn main() {
+    let Ok(lines) = read_lines("src/days/day2_input.txt") else { return };
     let mut score = 0;
     for line in lines {
         if let Ok(l) = line {
